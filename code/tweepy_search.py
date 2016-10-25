@@ -1,11 +1,9 @@
 import tweepy
 import sys
-API_KEY = 'ZFzPvBCcQaLjKcsOrthZ1L5mc'
-API_SECRET = 'zAriCp8CF9nrPoeVngFG6Tv6JT78yvfukLYYtSKWEcEJbbNrJ6'
-OAUTH_TOKEN = "780463243642937344-hlLqQ0YyR6bVDD9bGexynuddVmqIS3w"
-OAUTH_TOKEN_SECRET = "bcqxHJnhZygv7q6unBKlp1axJL9Mk6lAHIiN2MQ8y6P9w"
+from twitter_config import consumer_key, consumer_secret
 
-auth = tweepy.AppAuthHandler(API_KEY, API_SECRET)
+
+auth = tweepy.AppAuthHandler(consumer_key, consumer_secret)
 
 api = tweepy.API(auth, wait_on_rate_limit=True,
                  wait_on_rate_limit_notify=True)
@@ -39,13 +37,13 @@ with open(save_dir + fName, 'w') as f:
     while tweetCount < maxTweets:
         try:
             if max_id <= 0:
-                if (not sinceId):
+                if not sinceId:
                     new_tweets = api.search(q=searchQuery, count=tweetsPerQry)
                 else:
                     new_tweets = api.search(q=searchQuery, count=tweetsPerQry,
                                             since_id=sinceId)
             else:
-                if (not sinceId):
+                if not sinceId:
                     new_tweets = api.search(q=searchQuery, count=tweetsPerQry,
                                             max_id=str(max_id - 1))
                 else:
